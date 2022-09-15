@@ -41,7 +41,7 @@ class _CurrencyCardState extends StateX<CurrencyCard> {
   Widget build(BuildContext context) {
     Color bgColor = con.model.difference >= 0
         ? const Color(0xFF105a37).withOpacity(0.55)
-        : Color.fromARGB(255, 146, 9, 9).withOpacity(0.55);
+        : const Color.fromARGB(255, 146, 9, 9).withOpacity(0.55);
 
     Color priceColor = con.model.difference >= 0
         ? const Color.fromARGB(255, 34, 221, 118)
@@ -73,8 +73,8 @@ class _CurrencyCardState extends StateX<CurrencyCard> {
                   ),
                 ],
               ),
-              right: 4,
-              bottom: 4,
+              right: 6,
+              bottom: 6,
             ),
             Container(
               //height: 300,

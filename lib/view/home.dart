@@ -61,7 +61,7 @@ class _MyHomePageState extends StateX<MyHomePage> {
               //),
               //),
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+                padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
                 child: SingleChildScrollView(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -76,7 +76,7 @@ class _MyHomePageState extends StateX<MyHomePage> {
                           "difference": 0.12,
                         },
                       ),
-                      const SizedBox(height: 8),
+                      const SizedBox(height: 1),
                       const CurrencyCard(
                         model: {
                           "name": "EURTRY",
@@ -86,7 +86,7 @@ class _MyHomePageState extends StateX<MyHomePage> {
                           "difference": 0.31,
                         },
                       ),
-                      const SizedBox(height: 8),
+                      const SizedBox(height: 1),
                       const CurrencyCard(
                         model: {
                           "name": "EURUSD",
@@ -96,7 +96,7 @@ class _MyHomePageState extends StateX<MyHomePage> {
                           "difference": 0.18,
                         },
                       ),
-                      const SizedBox(height: 8),
+                      const SizedBox(height: 1),
                       const CurrencyCard(
                         model: {
                           "name": "JPYTRY",
@@ -106,7 +106,7 @@ class _MyHomePageState extends StateX<MyHomePage> {
                           "difference": -0.08,
                         },
                       ),
-                      const SizedBox(height: 8),
+                      const SizedBox(height: 1),
                       const CurrencyCard(
                         model: {
                           "name": "GBPTRY",
@@ -116,7 +116,7 @@ class _MyHomePageState extends StateX<MyHomePage> {
                           "difference": -0.47,
                         },
                       ),
-                      const SizedBox(height: 8),
+                      const SizedBox(height: 1),
                       const CurrencyCard(
                         model: {
                           "name": "DKKTRY",
@@ -126,7 +126,7 @@ class _MyHomePageState extends StateX<MyHomePage> {
                           "difference": 0.32,
                         },
                       ),
-                      const SizedBox(height: 8),
+                      const SizedBox(height: 1),
                       const CurrencyCard(
                         model: {
                           "name": "SEKTRY",
@@ -136,7 +136,7 @@ class _MyHomePageState extends StateX<MyHomePage> {
                           "difference": -0.06,
                         },
                       ),
-                      const SizedBox(height: 8),
+                      const SizedBox(height: 1),
                       const CurrencyCard(
                         model: {
                           "name": "NOKTRY",
@@ -146,7 +146,7 @@ class _MyHomePageState extends StateX<MyHomePage> {
                           "difference": -0.61,
                         },
                       ),
-                      const SizedBox(height: 8),
+                      const SizedBox(height: 1),
                       const CurrencyCard(
                         model: {
                           "name": "CHFTRY",
@@ -156,7 +156,7 @@ class _MyHomePageState extends StateX<MyHomePage> {
                           "difference": 0.27,
                         },
                       ),
-                      const SizedBox(height: 8),
+                      const SizedBox(height: 1),
                       const CurrencyCard(
                         model: {
                           "name": "AUDTRY",
@@ -190,21 +190,25 @@ class _MyHomePageState extends StateX<MyHomePage> {
               height: 2,
             ),
             unselectedItemColor: const Color(0xffA1B4C4),
-            backgroundColor: const Color(0xff202529),
+            backgroundColor: const Color.fromARGB(255, 12, 14, 15),
             currentIndex: appCon.bottomNavIndex,
             onTap: (index) => appCon.onNavbarChanged(index),
             items: const [
               BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.auto_graph,
-                ),
-                label: "Piyasa",
+                icon: Icon(Icons.auto_graph),
+                label: "Döviz",
               ),
               BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.currency_exchange,
-                ),
+                icon: Icon(Icons.balance_rounded),
+                label: "Altın",
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.currency_exchange),
                 label: "Çevirici",
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.alarm),
+                label: "Alarm",
               ),
             ],
           ),
@@ -214,7 +218,7 @@ class _MyHomePageState extends StateX<MyHomePage> {
   Widget buildHeader(BuildContext context) {
     return Container(
       padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
-      margin: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+      //margin: const EdgeInsets.fromLTRB(8, 0, 8, 0),
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
