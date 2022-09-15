@@ -48,127 +48,130 @@ class _MyHomePageState extends StateX<MyHomePage> {
         //appBar: AppBar(
         //  title: Text(widget.title),
         //),
-        body: Container(
-          //decoration: BoxDecoration(
-          //image: DecorationImage(
-          //  image: AssetImage("assets/images/bg.png"),
-          //  fit: BoxFit.cover,
-          //),
-          //),
-          height: double.infinity,
-          color: const Color.fromARGB(255, 27, 31, 34),
-          child: Padding(
-            padding: const EdgeInsets.all(8),
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  const SizedBox(height: 32),
-                  buildHeader(context),
-                  const SizedBox(height: 0),
-                  const CurrencyCard(
-                    model: {
-                      "name": "USDTRY",
-                      "description": "Amerikan Doları",
-                      "buy_price": 18.384,
-                      "sell_price": 18.452,
-                      "difference": 0.12,
-                    },
+        backgroundColor: const Color.fromARGB(255, 27, 31, 34),
+        body: Column(
+          children: [
+            const SizedBox(height: 32),
+            buildHeader(context),
+            Flexible(
+              //decoration: BoxDecoration(
+              //image: DecorationImage(
+              //  image: AssetImage("assets/images/bg.png"),
+              //  fit: BoxFit.cover,
+              //),
+              //),
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: const <Widget>[
+                      const SizedBox(height: 0),
+                      const CurrencyCard(
+                        model: {
+                          "name": "USDTRY",
+                          "description": "Amerikan Doları",
+                          "buy_price": 18.384,
+                          "sell_price": 18.452,
+                          "difference": 0.12,
+                        },
+                      ),
+                      const SizedBox(height: 8),
+                      const CurrencyCard(
+                        model: {
+                          "name": "EURTRY",
+                          "description": "Euro",
+                          "buy_price": 18.345,
+                          "sell_price": 18.447,
+                          "difference": 0.31,
+                        },
+                      ),
+                      const SizedBox(height: 8),
+                      const CurrencyCard(
+                        model: {
+                          "name": "EURUSD",
+                          "description": "Euro/Dolar",
+                          "buy_price": 0.997,
+                          "sell_price": 0.999,
+                          "difference": 0.18,
+                        },
+                      ),
+                      const SizedBox(height: 8),
+                      const CurrencyCard(
+                        model: {
+                          "name": "JPYTRY",
+                          "description": "Japon Yeni",
+                          "buy_price": 0.127,
+                          "sell_price": 0.128,
+                          "difference": -0.08,
+                        },
+                      ),
+                      const SizedBox(height: 8),
+                      const CurrencyCard(
+                        model: {
+                          "name": "GBPTRY",
+                          "description": "İngiliz Sterlini",
+                          "buy_price": 20.998,
+                          "sell_price": 21.168,
+                          "difference": -0.47,
+                        },
+                      ),
+                      const SizedBox(height: 8),
+                      const CurrencyCard(
+                        model: {
+                          "name": "DKKTRY",
+                          "description": "Danimarka Kronu",
+                          "buy_price": 2.44,
+                          "sell_price": 2.481,
+                          "difference": 0.32,
+                        },
+                      ),
+                      const SizedBox(height: 8),
+                      const CurrencyCard(
+                        model: {
+                          "name": "SEKTRY",
+                          "description": "İsveç Kronu",
+                          "buy_price": 1.696,
+                          "sell_price": 1.716,
+                          "difference": -0.06,
+                        },
+                      ),
+                      const SizedBox(height: 8),
+                      const CurrencyCard(
+                        model: {
+                          "name": "NOKTRY",
+                          "description": "Norveç Kronu",
+                          "buy_price": 1.793,
+                          "sell_price": 1.803,
+                          "difference": -0.61,
+                        },
+                      ),
+                      const SizedBox(height: 8),
+                      const CurrencyCard(
+                        model: {
+                          "name": "CHFTRY",
+                          "description": "İsviçre Frangı",
+                          "buy_price": 19.006,
+                          "sell_price": 19.187,
+                          "difference": 0.27,
+                        },
+                      ),
+                      const SizedBox(height: 8),
+                      const CurrencyCard(
+                        model: {
+                          "name": "AUDTRY",
+                          "description": "Avustralya Doları",
+                          "buy_price": 12.079,
+                          "sell_price": 12.329,
+                          "difference": -0.40,
+                        },
+                      ),
+                    ],
                   ),
-                  const SizedBox(height: 8),
-                  const CurrencyCard(
-                    model: {
-                      "name": "EURTRY",
-                      "description": "Euro",
-                      "buy_price": 18.345,
-                      "sell_price": 18.447,
-                      "difference": 0.31,
-                    },
-                  ),
-                  const SizedBox(height: 8),
-                  const CurrencyCard(
-                    model: {
-                      "name": "EURUSD",
-                      "description": "Euro/Dolar",
-                      "buy_price": 0.997,
-                      "sell_price": 0.999,
-                      "difference": 0.18,
-                    },
-                  ),
-                  const SizedBox(height: 8),
-                  const CurrencyCard(
-                    model: {
-                      "name": "JPYTRY",
-                      "description": "Japon Yeni",
-                      "buy_price": 0.127,
-                      "sell_price": 0.128,
-                      "difference": -0.08,
-                    },
-                  ),
-                  const SizedBox(height: 8),
-                  const CurrencyCard(
-                    model: {
-                      "name": "GBPTRY",
-                      "description": "İngiliz Sterlini",
-                      "buy_price": 20.998,
-                      "sell_price": 21.168,
-                      "difference": -0.47,
-                    },
-                  ),
-                  const SizedBox(height: 8),
-                  const CurrencyCard(
-                    model: {
-                      "name": "DKKTRY",
-                      "description": "Danimarka Kronu",
-                      "buy_price": 2.44,
-                      "sell_price": 2.481,
-                      "difference": 0.32,
-                    },
-                  ),
-                  const SizedBox(height: 8),
-                  const CurrencyCard(
-                    model: {
-                      "name": "SEKTRY",
-                      "description": "İsveç Kronu",
-                      "buy_price": 1.696,
-                      "sell_price": 1.716,
-                      "difference": -0.06,
-                    },
-                  ),
-                  const SizedBox(height: 8),
-                  const CurrencyCard(
-                    model: {
-                      "name": "NOKTRY",
-                      "description": "Norveç Kronu",
-                      "buy_price": 1.793,
-                      "sell_price": 1.803,
-                      "difference": -0.61,
-                    },
-                  ),
-                  const SizedBox(height: 8),
-                  const CurrencyCard(
-                    model: {
-                      "name": "CHFTRY",
-                      "description": "İsviçre Frangı",
-                      "buy_price": 19.006,
-                      "sell_price": 19.187,
-                      "difference": 0.27,
-                    },
-                  ),
-                  const SizedBox(height: 8),
-                  const CurrencyCard(
-                    model: {
-                      "name": "AUDTRY",
-                      "description": "Avustralya Doları",
-                      "buy_price": 12.079,
-                      "sell_price": 12.329,
-                      "difference": -0.40,
-                    },
-                  ),
-                ],
+                ),
               ),
             ),
-          ),
+          ],
         ),
         bottomNavigationBar: SetState(
           builder: (context, object) => BottomNavigationBar(
@@ -211,6 +214,7 @@ class _MyHomePageState extends StateX<MyHomePage> {
   Widget buildHeader(BuildContext context) {
     return Container(
       padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
+      margin: const EdgeInsets.fromLTRB(8, 0, 8, 0),
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
