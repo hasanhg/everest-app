@@ -51,109 +51,136 @@ class _CurrencyCardState extends StateX<CurrencyCard> {
       //borderRadius: BorderRadius.circular(8),
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
-        child: Container(
-          //height: 300,
-          padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                const Color(0xFFA1B4C4).withOpacity(0.12),
-                bgColor,
-              ],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
-            //borderRadius: BorderRadius.circular(8),
-            //border: Border.all(
-            //  width: 2,
-            //  color: Colors.white70.withOpacity(0.25),
-            //),
-          ),
-          child: Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
+        child: Stack(
+          children: [
+            Positioned(
+              child: Row(
                 children: [
-                  const CircleAvatar(
-                    backgroundColor: Color.fromARGB(255, 27, 31, 34),
-                    foregroundColor: Colors.white,
-                    radius: 18,
-                    child: Icon(
-                      Icons.currency_bitcoin,
-                      size: 24,
+                  const Icon(
+                    Icons.access_time,
+                    color: Colors.white54,
+                    size: 12,
+                  ),
+                  const SizedBox(width: 4),
+                  Text(
+                    '${con.model.lastUpdatedAt.hour.toString().padLeft(2, "0")}:${con.model.lastUpdatedAt.minute.toString().padLeft(2, "0")}',
+                    style: GoogleFonts.cairo(
+                      color: Colors.white54,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 10,
+                      height: 1.4,
                     ),
                   ),
-                  const SizedBox(width: 12),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
+                ],
+              ),
+              right: 4,
+              bottom: 4,
+            ),
+            Container(
+              //height: 300,
+              padding: const EdgeInsets.fromLTRB(16, 24, 16, 24),
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    const Color(0xFFA1B4C4).withOpacity(0.12),
+                    bgColor,
+                  ],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+                //borderRadius: BorderRadius.circular(8),
+                //border: Border.all(
+                //  width: 2,
+                //  color: Colors.white70.withOpacity(0.25),
+                //),
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
                     children: [
-                      Text(
-                        con.model.name,
-                        style: GoogleFonts.cairo(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 12,
-                          height: 1.4,
+                      const CircleAvatar(
+                        backgroundColor: Color.fromARGB(255, 27, 31, 34),
+                        foregroundColor: Colors.white,
+                        radius: 18,
+                        child: Icon(
+                          Icons.currency_bitcoin,
+                          size: 24,
                         ),
                       ),
-                      Text(
-                        con.model.description,
-                        style: GoogleFonts.cairo(
-                          color: Colors.white54,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 12,
-                          height: 1.4,
+                      const SizedBox(width: 12),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            con.model.name,
+                            style: GoogleFonts.cairo(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w700,
+                              fontSize: 12,
+                              height: 1.4,
+                            ),
+                          ),
+                          Text(
+                            con.model.description,
+                            style: GoogleFonts.cairo(
+                              color: Colors.white54,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 12,
+                              height: 1.4,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      SizedBox(
+                        width: 48,
+                        child: Text(
+                          con.model.buyPrice.toString(),
+                          style: GoogleFonts.cairo(
+                            color: priceColor,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 12,
+                          ),
+                          textAlign: TextAlign.end,
+                        ),
+                      ),
+                      SizedBox(
+                        width: 48,
+                        child: Text(
+                          con.model.sellPrice.toString(),
+                          style: GoogleFonts.cairo(
+                            color: priceColor,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 12,
+                          ),
+                          textAlign: TextAlign.end,
+                        ),
+                      ),
+                      SizedBox(
+                        width: 48,
+                        child: Text(
+                          (con.model.difference.sign > 0 ? '%' : '-%') +
+                              con.model.difference.abs().toString(),
+                          style: GoogleFonts.cairo(
+                            color: priceColor,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 12,
+                          ),
+                          textAlign: TextAlign.end,
                         ),
                       ),
                     ],
                   ),
                 ],
               ),
-              Row(
-                children: [
-                  SizedBox(
-                    width: 48,
-                    child: Text(
-                      con.model.buyPrice.toString(),
-                      style: GoogleFonts.cairo(
-                        color: priceColor,
-                        fontWeight: FontWeight.w700,
-                        fontSize: 12,
-                      ),
-                      textAlign: TextAlign.end,
-                    ),
-                  ),
-                  SizedBox(
-                    width: 48,
-                    child: Text(
-                      con.model.sellPrice.toString(),
-                      style: GoogleFonts.cairo(
-                        color: priceColor,
-                        fontWeight: FontWeight.w700,
-                        fontSize: 12,
-                      ),
-                      textAlign: TextAlign.end,
-                    ),
-                  ),
-                  SizedBox(
-                    width: 48,
-                    child: Text(
-                      (con.model.difference.sign > 0 ? '%' : '-%') +
-                          con.model.difference.abs().toString(),
-                      style: GoogleFonts.cairo(
-                        color: priceColor,
-                        fontWeight: FontWeight.w700,
-                        fontSize: 12,
-                      ),
-                      textAlign: TextAlign.end,
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
