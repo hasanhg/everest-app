@@ -229,7 +229,7 @@ class _MyHomePageState extends StateX<MyHomePage> {
             "Birim",
             style: GoogleFonts.cairo(
               color: Colors.white,
-              fontWeight: FontWeight.w700,
+              fontWeight: FontWeight.w600,
               fontSize: 14,
             ),
             textAlign: TextAlign.center,
@@ -242,7 +242,7 @@ class _MyHomePageState extends StateX<MyHomePage> {
                   "Alış",
                   style: GoogleFonts.cairo(
                     color: Colors.white,
-                    fontWeight: FontWeight.w700,
+                    fontWeight: FontWeight.w600,
                     fontSize: 14,
                   ),
                   textAlign: TextAlign.end,
@@ -254,7 +254,7 @@ class _MyHomePageState extends StateX<MyHomePage> {
                   "Satış",
                   style: GoogleFonts.cairo(
                     color: Colors.white,
-                    fontWeight: FontWeight.w700,
+                    fontWeight: FontWeight.w600,
                     fontSize: 14,
                   ),
                   textAlign: TextAlign.end,
@@ -266,7 +266,7 @@ class _MyHomePageState extends StateX<MyHomePage> {
                   "Fark",
                   style: GoogleFonts.cairo(
                     color: Colors.white,
-                    fontWeight: FontWeight.w700,
+                    fontWeight: FontWeight.w600,
                     fontSize: 14,
                   ),
                   textAlign: TextAlign.end,
