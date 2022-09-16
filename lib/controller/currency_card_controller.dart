@@ -8,7 +8,9 @@ class CurrencyCardController extends StateXController {
       _this ??= CurrencyCardController._(state, data);
 
   CurrencyCardController._(StateX? state, Map? data)
-      : _model = CurrencyCardModel.fromJSON(data ?? {}),
+      : _model = data != null
+            ? CurrencyCardModel.fromJSON(data)
+            : CurrencyCardModel(),
         super(state);
 
   static CurrencyCardController? _this;

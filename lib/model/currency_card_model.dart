@@ -25,11 +25,19 @@ class CurrencyCardModel {
   );
 
   CurrencyCardModel.fromJSON(Map json)
-      : _name = json["name"] ?? "",
+      : _name = json["code"] ?? "",
         _description = json["description"] ?? "",
         _lastUpdatedAt =
             DateTime.tryParse(json["last_updated_at"] ?? "") ?? DateTime.now(),
-        _buyPrice = json["buy_price"] ?? 0,
-        _sellPrice = json["sell_price"] ?? 0,
-        _difference = json["difference"] ?? 0;
+        _buyPrice = json["alis"] is double
+            ? json["alis"]
+            : double.tryParse(json["alis"]) ?? 0,
+        _sellPrice = json["satis"] is double
+            ? json["satis"]
+            : double.tryParse(json["satis"]) ?? 0 {
+    _difference =
+        (((_buyPrice - json["kapanis"]) * 100 / json["kapanis"]) * 100)
+                .roundToDouble() /
+            100;
+  }
 }

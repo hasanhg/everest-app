@@ -1,9 +1,13 @@
+import 'dart:convert';
+
 import 'package:everest_app/components/currency_card.dart';
 import 'package:everest_app/controller/app_controller.dart';
 import 'package:everest_app/controller/home_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:state_extended/state_extended.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
+import 'package:web_socket_channel/io.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({
@@ -29,6 +33,8 @@ class _MyHomePageState extends StateX<MyHomePage> {
   late HomeController con;
   late AppStateX appState;
   late AppController appCon;
+  late Stream stream;
+  Map<String, CurrencyCard>? _cards;
 
   @override
   void initState() {
@@ -40,6 +46,10 @@ class _MyHomePageState extends StateX<MyHomePage> {
     appState = rootState!;
 
     appCon = appState.controller as AppController;
+
+    stream = IOWebSocketChannel.connect(
+      Uri.parse("ws://192.168.1.157:8080/currency_rates"),
+    ).stream;
   }
 
   /// This is 'the View'; the interface of the home page.
@@ -63,110 +73,39 @@ class _MyHomePageState extends StateX<MyHomePage> {
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
                 child: SingleChildScrollView(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: const <Widget>[
-                      const SizedBox(height: 0),
-                      const CurrencyCard(
-                        model: {
-                          "name": "USDTRY",
-                          "description": "Amerikan Doları",
-                          "buy_price": 18.384,
-                          "sell_price": 18.452,
-                          "difference": 0.12,
-                        },
-                      ),
-                      const SizedBox(height: 1),
-                      const CurrencyCard(
-                        model: {
-                          "name": "EURTRY",
-                          "description": "Euro",
-                          "buy_price": 18.345,
-                          "sell_price": 18.447,
-                          "difference": 0.31,
-                        },
-                      ),
-                      const SizedBox(height: 1),
-                      const CurrencyCard(
-                        model: {
-                          "name": "EURUSD",
-                          "description": "Euro/Dolar",
-                          "buy_price": 0.997,
-                          "sell_price": 0.999,
-                          "difference": 0.18,
-                        },
-                      ),
-                      const SizedBox(height: 1),
-                      const CurrencyCard(
-                        model: {
-                          "name": "JPYTRY",
-                          "description": "Japon Yeni",
-                          "buy_price": 0.127,
-                          "sell_price": 0.128,
-                          "difference": -0.08,
-                        },
-                      ),
-                      const SizedBox(height: 1),
-                      const CurrencyCard(
-                        model: {
-                          "name": "GBPTRY",
-                          "description": "İngiliz Sterlini",
-                          "buy_price": 20.998,
-                          "sell_price": 21.168,
-                          "difference": -0.47,
-                        },
-                      ),
-                      const SizedBox(height: 1),
-                      const CurrencyCard(
-                        model: {
-                          "name": "DKKTRY",
-                          "description": "Danimarka Kronu",
-                          "buy_price": 2.44,
-                          "sell_price": 2.481,
-                          "difference": 0.32,
-                        },
-                      ),
-                      const SizedBox(height: 1),
-                      const CurrencyCard(
-                        model: {
-                          "name": "SEKTRY",
-                          "description": "İsveç Kronu",
-                          "buy_price": 1.696,
-                          "sell_price": 1.716,
-                          "difference": -0.06,
-                        },
-                      ),
-                      const SizedBox(height: 1),
-                      const CurrencyCard(
-                        model: {
-                          "name": "NOKTRY",
-                          "description": "Norveç Kronu",
-                          "buy_price": 1.793,
-                          "sell_price": 1.803,
-                          "difference": -0.61,
-                        },
-                      ),
-                      const SizedBox(height: 1),
-                      const CurrencyCard(
-                        model: {
-                          "name": "CHFTRY",
-                          "description": "İsviçre Frangı",
-                          "buy_price": 19.006,
-                          "sell_price": 19.187,
-                          "difference": 0.27,
-                        },
-                      ),
-                      const SizedBox(height: 1),
-                      const CurrencyCard(
-                        model: {
-                          "name": "AUDTRY",
-                          "description": "Avustralya Doları",
-                          "buy_price": 12.079,
-                          "sell_price": 12.329,
-                          "difference": -0.40,
-                        },
-                      ),
-                    ],
+                  child: StreamBuilder(
+                    stream: stream,
+                    builder: (context, snapshot) {
+                      if (!snapshot.hasData) {
+                        return Container();
+                      }
+
+                      Map data = jsonDecode(snapshot.data as String);
+
+                      if (_cards == null) {
+                        _cards = data.map(
+                          (key, model) => MapEntry(
+                            key,
+                            CurrencyCard(
+                              key: UniqueKey(),
+                              model: model,
+                            ),
+                          ),
+                        );
+                      } else {
+                        data.forEach((key, model) {
+                          _cards![key] = CurrencyCard(
+                            key: UniqueKey(),
+                            model: model,
+                          );
+                        });
+                      }
+
+                      return Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: _cards!.values.toList(),
+                      );
+                    },
                   ),
                 ),
               ),

@@ -15,6 +15,9 @@ class CurrencyCard extends StatefulWidget {
 
   @override
   State createState() => _CurrencyCardState();
+
+  @override
+  String toString({DiagnosticLevel? minLevel}) => "${model}";
 }
 
 class _CurrencyCardState extends StateX<CurrencyCard> {
@@ -39,13 +42,16 @@ class _CurrencyCardState extends StateX<CurrencyCard> {
 
   @override
   Widget build(BuildContext context) {
-    Color bgColor = con.model.difference >= 0
-        ? const Color(0xFF105a37).withOpacity(0.55)
-        : const Color.fromARGB(255, 146, 9, 9).withOpacity(0.55);
+    Color bgColor = Colors.grey.shade800.withOpacity(0.75),
+        priceColor = Colors.grey;
 
-    Color priceColor = con.model.difference >= 0
-        ? const Color.fromARGB(255, 34, 221, 118)
-        : const Color.fromARGB(255, 231, 27, 27);
+    if (con.model.difference > 0) {
+      bgColor = const Color(0xFF105a37).withOpacity(0.55);
+      priceColor = const Color.fromARGB(255, 34, 221, 118);
+    } else if (con.model.difference < 0) {
+      bgColor = const Color.fromARGB(255, 146, 9, 9).withOpacity(0.55);
+      priceColor = const Color.fromARGB(255, 231, 27, 27);
+    }
 
     return ClipRRect(
       //borderRadius: BorderRadius.circular(8),
@@ -141,7 +147,7 @@ class _CurrencyCardState extends StateX<CurrencyCard> {
                       SizedBox(
                         width: 36,
                         child: Text(
-                          (con.model.difference.sign > 0 ? '%' : '-%') +
+                          (con.model.difference.sign >= 0 ? '%' : '-%') +
                               con.model.difference.abs().toString(),
                           style: GoogleFonts.cairo(
                             color: priceColor,
@@ -154,7 +160,9 @@ class _CurrencyCardState extends StateX<CurrencyCard> {
                       Icon(
                         con.model.difference.sign > 0
                             ? Icons.arrow_drop_up
-                            : Icons.arrow_drop_down,
+                            : con.model.difference.sign < 0
+                                ? Icons.arrow_drop_down
+                                : Icons.remove,
                         size: 18,
                         color: priceColor,
                       ),
