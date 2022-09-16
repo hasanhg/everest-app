@@ -6,6 +6,32 @@ import 'package:flutter/material.dart';
 import 'package:state_extended/state_extended.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+Map descMap = {
+  "USDTRY": "Amerikan Doları",
+  "EURTRY": "Euro",
+  "EURUSD": "Euro/Dolar",
+  "JPYTRY": "Japon Yeni",
+  "GBPTRY": "İngiliz Sterlini",
+  "DKKTRY": "Danimarka Kronu",
+  "SEKTRY": "İsveç Kronu",
+  "NOKTRY": "Norveç Kronu",
+  "CHFTRY": "İsviçre Frangı",
+  "AUDTRY": "Avustralya Doları",
+};
+
+Map<String, IconData> iconMap = {
+  "USDTRY": Icons.attach_money,
+  "EURTRY": Icons.euro_symbol,
+  "EURUSD": Icons.euro_symbol,
+  "JPYTRY": Icons.currency_yen,
+  "GBPTRY": Icons.currency_pound,
+  //"DKKTRY": "Danimarka Kronu",
+  //"SEKTRY": "İsveç Kronu",
+  //"NOKTRY": "Norveç Kronu",
+  "CHFTRY": Icons.currency_franc,
+  "AUDTRY": Icons.attach_money,
+};
+
 class CurrencyCard extends StatefulWidget {
   const CurrencyCard({
     Key? key,
@@ -106,12 +132,12 @@ class _CurrencyCardState extends StateX<CurrencyCard> {
                 children: [
                   Row(
                     children: [
-                      const CircleAvatar(
-                        backgroundColor: Color.fromARGB(255, 27, 31, 34),
+                      CircleAvatar(
+                        backgroundColor: const Color.fromARGB(255, 27, 31, 34),
                         foregroundColor: Colors.white,
                         radius: 18,
                         child: Icon(
-                          Icons.currency_bitcoin,
+                          iconMap[con.model.name] ?? Icons.priority_high,
                           size: 24,
                         ),
                       ),
@@ -132,7 +158,9 @@ class _CurrencyCardState extends StateX<CurrencyCard> {
                               ),
                             ),
                             Text(
-                              con.model.description,
+                              con.model.description ??
+                                  descMap[con.model.name] ??
+                                  "",
                               style: GoogleFonts.cairo(
                                 color: Colors.white54,
                                 fontWeight: FontWeight.w600,

@@ -1,13 +1,13 @@
 class CurrencyCardModel {
   String get name => _name;
-  String get description => _description;
+  String? get description => _description;
   DateTime get lastUpdatedAt => _lastUpdatedAt;
   double get buyPrice => _buyPrice;
   double get sellPrice => _sellPrice;
   double get difference => _difference;
 
   String _name = "";
-  String _description = "";
+  String? _description = "";
   DateTime _lastUpdatedAt = DateTime.now();
   double _buyPrice = 0;
   double _sellPrice = 0;
@@ -26,9 +26,9 @@ class CurrencyCardModel {
 
   CurrencyCardModel.fromJSON(Map json)
       : _name = json["code"] ?? "",
-        _description = json["description"] ?? "",
+        _description = json["description"],
         _lastUpdatedAt =
-            DateTime.tryParse(json["last_updated_at"] ?? "") ?? DateTime.now(),
+            DateTime.tryParse(json["tarih"] ?? "") ?? DateTime.now(),
         _buyPrice = json["alis"] is double
             ? json["alis"]
             : double.tryParse(json["alis"]) ?? 0,
