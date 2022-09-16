@@ -78,7 +78,7 @@ class _CurrencyCardState extends StateX<CurrencyCard> {
             ),
             Container(
               //height: 300,
-              padding: const EdgeInsets.fromLTRB(16, 24, 16, 24),
+              padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors: [
@@ -110,29 +110,53 @@ class _CurrencyCardState extends StateX<CurrencyCard> {
                         ),
                       ),
                       const SizedBox(width: 12),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            con.model.name,
-                            style: GoogleFonts.cairo(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w700,
-                              fontSize: 12,
-                              height: 1.4,
+                      SizedBox(
+                        width: 96,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              con.model.name,
+                              style: GoogleFonts.cairo(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w700,
+                                fontSize: 12,
+                                height: 1.4,
+                              ),
                             ),
-                          ),
-                          Text(
-                            con.model.description,
-                            style: GoogleFonts.cairo(
-                              color: Colors.white54,
-                              fontWeight: FontWeight.w600,
-                              fontSize: 12,
-                              height: 1.4,
+                            Text(
+                              con.model.description,
+                              style: GoogleFonts.cairo(
+                                color: Colors.white54,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 12,
+                                height: 1.4,
+                              ),
                             ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(width: 0),
+                      SizedBox(
+                        width: 36,
+                        child: Text(
+                          (con.model.difference.sign > 0 ? '%' : '-%') +
+                              con.model.difference.abs().toString(),
+                          style: GoogleFonts.cairo(
+                            color: priceColor,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 12,
                           ),
-                        ],
+                          textAlign: TextAlign.end,
+                        ),
+                      ),
+                      Icon(
+                        con.model.difference.sign > 0
+                            ? Icons.arrow_drop_up
+                            : Icons.arrow_drop_down,
+                        size: 18,
+                        color: priceColor,
                       ),
                     ],
                   ),
@@ -144,7 +168,7 @@ class _CurrencyCardState extends StateX<CurrencyCard> {
                           con.model.buyPrice.toString(),
                           style: GoogleFonts.cairo(
                             color: priceColor,
-                            fontWeight: FontWeight.w700,
+                            fontWeight: FontWeight.w600,
                             fontSize: 12,
                           ),
                           textAlign: TextAlign.end,
@@ -156,20 +180,7 @@ class _CurrencyCardState extends StateX<CurrencyCard> {
                           con.model.sellPrice.toString(),
                           style: GoogleFonts.cairo(
                             color: priceColor,
-                            fontWeight: FontWeight.w700,
-                            fontSize: 12,
-                          ),
-                          textAlign: TextAlign.end,
-                        ),
-                      ),
-                      SizedBox(
-                        width: 48,
-                        child: Text(
-                          (con.model.difference.sign > 0 ? '%' : '-%') +
-                              con.model.difference.abs().toString(),
-                          style: GoogleFonts.cairo(
-                            color: priceColor,
-                            fontWeight: FontWeight.w700,
+                            fontWeight: FontWeight.w600,
                             fontSize: 12,
                           ),
                           textAlign: TextAlign.end,

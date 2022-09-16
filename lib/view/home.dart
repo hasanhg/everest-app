@@ -173,47 +173,66 @@ class _MyHomePageState extends StateX<MyHomePage> {
             ),
           ],
         ),
-        bottomNavigationBar: SetState(
-          builder: (context, object) => BottomNavigationBar(
-            type: BottomNavigationBarType.fixed,
-            selectedItemColor: const Color(0xff1BC6B4),
-            selectedLabelStyle: GoogleFonts.aBeeZee(
-              color: const Color(0xff1BC6B4),
-              fontSize: 12,
-              fontWeight: FontWeight.w500,
-              height: 2,
-            ),
-            unselectedLabelStyle: GoogleFonts.aBeeZee(
-              color: const Color(0xffA1B4C4),
-              fontSize: 12,
-              fontWeight: FontWeight.w500,
-              height: 2,
-            ),
-            unselectedItemColor: const Color(0xffA1B4C4),
-            backgroundColor: const Color.fromARGB(255, 12, 14, 15),
-            currentIndex: appCon.bottomNavIndex,
-            onTap: (index) => appCon.onNavbarChanged(index),
-            items: const [
-              BottomNavigationBarItem(
-                icon: Icon(Icons.auto_graph),
-                label: "Döviz",
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.balance_rounded),
-                label: "Altın",
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.currency_exchange),
-                label: "Çevirici",
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.alarm),
-                label: "Alarm",
-              ),
+        bottomNavigationBar: buildBottomNavbar(context),
+      );
+
+  Widget buildBottomNavbar(BuildContext context) {
+    return SetState(
+      builder: (context, object) => Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              Color.fromARGB(255, 45, 54, 65),
+              Color.fromARGB(255, 21, 26, 32),
             ],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
+          border: Border(
+            top: BorderSide(width: 1, color: Color.fromARGB(255, 25, 37, 49)),
           ),
         ),
-      );
+        child: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
+          selectedItemColor: const Color(0xff1BC6B4),
+          selectedLabelStyle: GoogleFonts.aBeeZee(
+            color: const Color(0xff1BC6B4),
+            fontSize: 12,
+            fontWeight: FontWeight.w500,
+            height: 2,
+          ),
+          unselectedLabelStyle: GoogleFonts.aBeeZee(
+            color: const Color(0xffA1B4C4),
+            fontSize: 12,
+            fontWeight: FontWeight.w500,
+            height: 2,
+          ),
+          unselectedItemColor: const Color(0xffA1B4C4),
+          backgroundColor: const Color.fromARGB(0, 12, 14, 15),
+          currentIndex: appCon.bottomNavIndex,
+          onTap: (index) => appCon.onNavbarChanged(index),
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.auto_graph),
+              label: "Döviz",
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.balance_rounded),
+              label: "Maden",
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.currency_bitcoin),
+              label: "Kripto",
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.currency_exchange),
+              label: "Çevirici",
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 
   Widget buildHeader(BuildContext context) {
     return Container(
@@ -260,18 +279,6 @@ class _MyHomePageState extends StateX<MyHomePage> {
                 width: 48,
                 child: Text(
                   "Satış",
-                  style: GoogleFonts.cairo(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w600,
-                    fontSize: 14,
-                  ),
-                  textAlign: TextAlign.end,
-                ),
-              ),
-              SizedBox(
-                width: 48,
-                child: Text(
-                  "Fark",
                   style: GoogleFonts.cairo(
                     color: Colors.white,
                     fontWeight: FontWeight.w600,
