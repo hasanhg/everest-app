@@ -32,6 +32,7 @@ class _MyHomePageState extends StateX<MyHomePage> {
   late HomeController con;
   late AppStateX appState;
   late AppController appCon;
+  Map<String, CurrencyCard>? cards;
 
   @override
   void initState() {
@@ -70,6 +71,7 @@ class _MyHomePageState extends StateX<MyHomePage> {
     return SetState(
       builder: (context, object) {
         return Column(
+          mainAxisSize: MainAxisSize.max,
           children: [
             const SizedBox(height: 32),
             buildHeader(context),
@@ -86,15 +88,20 @@ class _MyHomePageState extends StateX<MyHomePage> {
                   child: StreamBuilder(
                     stream: appCon.ws?.stream,
                     builder: (context, snapshot) {
-                      if (!snapshot.hasData) {
-                        return Container();
+                      if (!snapshot.hasData ||
+                          snapshot.connectionState == ConnectionState.waiting) {
+                        return SizedBox(
+                          height: MediaQuery.of(context).size.height - 64,
+                          child: const Center(
+                            child: CircularProgressIndicator(),
+                          ),
+                        );
                       }
 
                       Map data = jsonDecode(snapshot.data as String);
 
-                      var _cards = appCon.cards;
-                      if (_cards == null) {
-                        _cards = data.map(
+                      if (cards == null) {
+                        cards = data.map(
                           (key, model) => MapEntry(
                             key,
                             CurrencyCard(
@@ -105,18 +112,17 @@ class _MyHomePageState extends StateX<MyHomePage> {
                         );
                       } else {
                         data.forEach((key, model) {
-                          _cards![key] = CurrencyCard(
+                          cards![key] = CurrencyCard(
                             key: UniqueKey(),
                             model: model,
+                            updated: true,
                           );
                         });
                       }
 
-                      return SetState(
-                        builder: (context, object) => Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: _cards!.values.toList(),
-                        ),
+                      return Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: cards!.values.toList(),
                       );
                     },
                   ),
@@ -163,7 +169,10 @@ class _MyHomePageState extends StateX<MyHomePage> {
           unselectedItemColor: const Color(0xffA1B4C4),
           backgroundColor: const Color.fromARGB(0, 12, 14, 15),
           currentIndex: appCon.bottomNavIndex,
-          onTap: (index) => appCon.onNavbarChanged(index),
+          onTap: (index) {
+            cards = null;
+            appCon.onNavbarChanged(index);
+          },
           items: const [
             BottomNavigationBarItem(
               icon: Icon(Icons.auto_graph),

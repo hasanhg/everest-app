@@ -58,8 +58,11 @@ class CurrencyCard extends StatefulWidget {
   const CurrencyCard({
     Key? key,
     required this.model,
+    this.updated = false,
   }) : super(key: key);
+
   final Map model;
+  final bool updated;
 
   @override
   State createState() => _CurrencyCardState();
@@ -126,15 +129,12 @@ class _CurrencyCardState extends StateX<CurrencyCard> {
 
   @override
   Widget build(BuildContext context) {
-    Color bgColor = Colors.grey.shade800.withOpacity(0.75),
-        priceColor = Colors.grey;
+    Color bgColor = Colors.grey.shade800.withOpacity(0.75);
 
     if (con.model.difference > 0) {
       bgColor = const Color(0xFF105a37).withOpacity(0.55);
-      priceColor = const Color.fromARGB(255, 34, 221, 118);
     } else if (con.model.difference < 0) {
       bgColor = const Color.fromARGB(255, 146, 9, 9).withOpacity(0.55);
-      priceColor = const Color.fromARGB(255, 231, 27, 27);
     }
 
     return ClipRRect(
@@ -166,187 +166,209 @@ class _CurrencyCardState extends StateX<CurrencyCard> {
               right: 6,
               bottom: 6,
             ),
-            Container(
-              //height: 300,
-              padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    const Color(0xFFA1B4C4).withOpacity(0.12),
-                    bgColor,
-                  ],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                ),
-                //borderRadius: BorderRadius.circular(8),
-                //border: Border.all(
-                //  width: 2,
-                //  color: Colors.white70.withOpacity(0.25),
-                //),
+            FutureBuilder(
+              future: Future.delayed(const Duration(seconds: 1)),
+              builder: (context, snapshot) {
+                bool updated = widget.updated &&
+                    snapshot.connectionState == ConnectionState.waiting;
+
+                return Container(
+                  padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
+                  decoration: BoxDecoration(
+                    gradient: updated
+                        ? LinearGradient(
+                            colors: [
+                              Colors.blueGrey.shade400.withOpacity(0.5),
+                              Colors.blueGrey.withOpacity(0.5),
+                              Colors.blueGrey.shade400.withOpacity(0.5),
+                            ],
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                          )
+                        : LinearGradient(
+                            colors: [
+                              const Color(0xFFA1B4C4).withOpacity(0.12),
+                              bgColor,
+                            ],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                          ),
+                    border: Border.all(
+                      width: 1,
+                      color: updated
+                          ? Colors.blueGrey.shade300
+                          : const Color.fromARGB(255, 27, 31, 34),
+                    ),
+                  ),
+                  child: buildCard(context),
+                );
+              },
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget buildCard(BuildContext context) {
+    Color priceColor = Colors.grey;
+
+    if (con.model.difference > 0) {
+      priceColor = const Color.fromARGB(255, 34, 221, 118);
+    } else if (con.model.difference < 0) {
+      priceColor = const Color.fromARGB(255, 231, 27, 27);
+    }
+
+    return Row(
+      mainAxisSize: MainAxisSize.max,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Row(
+          children: [
+            CircleAvatar(
+              backgroundColor: const Color.fromARGB(255, 27, 31, 34),
+              foregroundColor: Colors.white,
+              radius: 20,
+              child: buildIcon(),
+            ),
+            const SizedBox(width: 12),
+            SizedBox(
+              width: 96,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    con.model.name,
+                    style: GoogleFonts.cairo(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w700,
+                      fontSize: 12,
+                      height: 1.4,
+                    ),
+                  ),
+                  Text(
+                    con.model.description ?? descMap[con.model.name] ?? "",
+                    style: GoogleFonts.cairo(
+                      color: Colors.white54,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 12,
+                      height: 1.4,
+                    ),
+                  ),
+                ],
               ),
+            ),
+            const SizedBox(width: 0),
+            SizedBox(
+              width: 36,
+              child: Text(
+                (con.model.difference.sign >= 0 ? '%' : '-%') +
+                    con.model.difference.abs().toString(),
+                style: GoogleFonts.cairo(
+                  color: priceColor,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 12,
+                ),
+                textAlign: TextAlign.end,
+              ),
+            ),
+            Icon(
+              con.model.difference.sign > 0
+                  ? Icons.arrow_drop_up
+                  : con.model.difference.sign < 0
+                      ? Icons.arrow_drop_down
+                      : Icons.remove,
+              size: 18,
+              color: priceColor,
+            ),
+          ],
+        ),
+        Row(
+          children: [
+            SizedBox(
+              width: 64,
               child: Row(
                 mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Row(
-                    children: [
-                      CircleAvatar(
-                        backgroundColor: const Color.fromARGB(255, 27, 31, 34),
-                        foregroundColor: Colors.white,
-                        radius: 20,
-                        child: buildIcon(),
-                      ),
-                      const SizedBox(width: 12),
-                      SizedBox(
-                        width: 96,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text(
-                              con.model.name,
-                              style: GoogleFonts.cairo(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w700,
-                                fontSize: 12,
-                                height: 1.4,
-                              ),
-                            ),
-                            Text(
-                              con.model.description ??
-                                  descMap[con.model.name] ??
-                                  "",
-                              style: GoogleFonts.cairo(
-                                color: Colors.white54,
-                                fontWeight: FontWeight.w600,
-                                fontSize: 12,
-                                height: 1.4,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(width: 0),
-                      SizedBox(
-                        width: 36,
-                        child: Text(
-                          (con.model.difference.sign >= 0 ? '%' : '-%') +
-                              con.model.difference.abs().toString(),
-                          style: GoogleFonts.cairo(
-                            color: priceColor,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 12,
-                          ),
-                          textAlign: TextAlign.end,
-                        ),
-                      ),
-                      Icon(
-                        con.model.difference.sign > 0
-                            ? Icons.arrow_drop_up
-                            : con.model.difference.sign < 0
-                                ? Icons.arrow_drop_down
-                                : Icons.remove,
-                        size: 18,
-                        color: priceColor,
-                      ),
-                    ],
+                  const Spacer(),
+                  FutureBuilder(
+                    future: Future.delayed(
+                      const Duration(seconds: 2),
+                    ),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting &&
+                          con.model.buyDir != null) {
+                        bool isUp = con.model.buyDir == "up";
+                        Color color = isUp
+                            ? const Color.fromARGB(255, 34, 221, 118)
+                            : const Color.fromARGB(255, 231, 27, 27);
+
+                        return Icon(
+                          isUp ? Icons.arrow_drop_up : Icons.arrow_drop_down,
+                          size: 16,
+                          color: color,
+                        );
+                      }
+
+                      return Container();
+                    },
                   ),
-                  Row(
-                    children: [
-                      SizedBox(
-                        width: 64,
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            const Spacer(),
-                            FutureBuilder(
-                              future: Future.delayed(
-                                const Duration(seconds: 2),
-                              ),
-                              builder: (context, snapshot) {
-                                if (snapshot.connectionState ==
-                                        ConnectionState.waiting &&
-                                    con.model.buyDir != null) {
-                                  bool isUp = con.model.buyDir == "up";
-                                  Color color = isUp
-                                      ? const Color.fromARGB(255, 34, 221, 118)
-                                      : const Color.fromARGB(255, 231, 27, 27);
+                  Text(
+                    con.model.buyPrice.toString(),
+                    style: GoogleFonts.cairo(
+                      color: priceColor,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 12,
+                    ),
+                    textAlign: TextAlign.end,
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(
+              width: 64,
+              child: Row(
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  const Spacer(),
+                  FutureBuilder(
+                    future: Future.delayed(
+                      const Duration(seconds: 2),
+                    ),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting &&
+                          con.model.sellDir != null) {
+                        bool isUp = con.model.sellDir == "up";
+                        Color color = isUp
+                            ? const Color.fromARGB(255, 34, 221, 118)
+                            : const Color.fromARGB(255, 231, 27, 27);
 
-                                  return Icon(
-                                    isUp
-                                        ? Icons.arrow_drop_up
-                                        : Icons.arrow_drop_down,
-                                    size: 16,
-                                    color: color,
-                                  );
-                                }
+                        return Icon(
+                          isUp ? Icons.arrow_drop_up : Icons.arrow_drop_down,
+                          size: 16,
+                          color: color,
+                        );
+                      }
 
-                                return Container();
-                              },
-                            ),
-                            Text(
-                              con.model.buyPrice.toString(),
-                              style: GoogleFonts.cairo(
-                                color: priceColor,
-                                fontWeight: FontWeight.w600,
-                                fontSize: 12,
-                              ),
-                              textAlign: TextAlign.end,
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        width: 64,
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            const Spacer(),
-                            FutureBuilder(
-                              future: Future.delayed(
-                                const Duration(seconds: 2),
-                              ),
-                              builder: (context, snapshot) {
-                                if (snapshot.connectionState ==
-                                        ConnectionState.waiting &&
-                                    con.model.sellDir != null) {
-                                  bool isUp = con.model.sellDir == "up";
-                                  Color color = isUp
-                                      ? const Color.fromARGB(255, 34, 221, 118)
-                                      : const Color.fromARGB(255, 231, 27, 27);
-
-                                  return Icon(
-                                    isUp
-                                        ? Icons.arrow_drop_up
-                                        : Icons.arrow_drop_down,
-                                    size: 16,
-                                    color: color,
-                                  );
-                                }
-
-                                return Container();
-                              },
-                            ),
-                            Text(
-                              con.model.sellPrice.toString(),
-                              style: GoogleFonts.cairo(
-                                color: priceColor,
-                                fontWeight: FontWeight.w600,
-                                fontSize: 12,
-                              ),
-                              textAlign: TextAlign.end,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
+                      return Container();
+                    },
+                  ),
+                  Text(
+                    con.model.sellPrice.toString(),
+                    style: GoogleFonts.cairo(
+                      color: priceColor,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 12,
+                    ),
+                    textAlign: TextAlign.end,
                   ),
                 ],
               ),
             ),
           ],
         ),
-      ),
+      ],
     );
   }
 }

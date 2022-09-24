@@ -16,20 +16,19 @@ class AppController extends StateXController {
   final AppModel _model;
 
   IOWebSocketChannel? _ws;
-  Map<String, CurrencyCard>? _cards;
+  Map<String, CurrencyCard>? cards;
 
   /// Note, the count comes from a separate class, _Model.
   int get bottomNavIndex => _model.bottomNavIndex;
 
   IOWebSocketChannel? get ws => _ws;
-  Map<String, CurrencyCard>? get cards => _cards;
 
   void onNavbarChanged(int index) {
     if (index == bottomNavIndex) {
       return;
     }
 
-    _cards = null;
+    cards = null;
     _model.setBottomNavIndex(index);
     _changeStream();
 
@@ -47,7 +46,7 @@ class AppController extends StateXController {
   }
 
   void setCards(Map<String, CurrencyCard>? cards) {
-    _cards = cards;
+    this.cards = cards;
     notifyClients();
   }
 

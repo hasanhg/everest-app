@@ -5,7 +5,7 @@ import 'package:flutter/material.dart' hide StateSetter;
 
 class CurrencyCardController extends StateXController {
   factory CurrencyCardController([StateX? state, Map? data]) =>
-      _this ??= CurrencyCardController._(state, data);
+      CurrencyCardController._(state, data);
 
   CurrencyCardController._(StateX? state, Map? data)
       : _model = data != null
@@ -13,7 +13,6 @@ class CurrencyCardController extends StateXController {
             : CurrencyCardModel(),
         super(state);
 
-  static CurrencyCardController? _this;
   CurrencyCardModel _model;
 
   void setModel(Map json) => _model = CurrencyCardModel.fromJSON(json);
