@@ -52,68 +52,82 @@ class _MyHomePageState extends StateX<MyHomePage> {
         //  title: Text(widget.title),
         //),
         backgroundColor: const Color.fromARGB(255, 27, 31, 34),
-        body: SetState(
-          builder: (context, object) {
-            return Column(
-              children: [
-                const SizedBox(height: 32),
-                buildHeader(context),
-                Flexible(
-                  //decoration: BoxDecoration(
-                  //image: DecorationImage(
-                  //  image: AssetImage("assets/images/bg.png"),
-                  //  fit: BoxFit.cover,
-                  //),
-                  //),
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                    child: SingleChildScrollView(
-                      child: StreamBuilder(
-                        stream: appCon.stream,
-                        builder: (context, snapshot) {
-                          if (!snapshot.hasData) {
-                            return Container();
-                          }
-
-                          Map data = jsonDecode(snapshot.data as String);
-
-                          var _cards = appCon.cards;
-                          if (_cards == null) {
-                            _cards = data.map(
-                              (key, model) => MapEntry(
-                                key,
-                                CurrencyCard(
-                                  key: UniqueKey(),
-                                  model: model,
-                                ),
-                              ),
-                            );
-                          } else {
-                            data.forEach((key, model) {
-                              _cards![key] = CurrencyCard(
-                                key: UniqueKey(),
-                                model: model,
-                              );
-                            });
-                          }
-
-                          return SetState(
-                            builder: (context, object) => Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: _cards!.values.toList(),
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            );
-          },
-        ),
+        body: SetState(builder: (context, object) => content(context)),
         bottomNavigationBar: buildBottomNavbar(context),
       );
+
+  Widget content(BuildContext context) {
+    switch (appCon.bottomNavIndex) {
+      case 0:
+      case 1:
+        return rateTable(context);
+      default:
+        return Container();
+    }
+  }
+
+  Widget rateTable(BuildContext context) {
+    return SetState(
+      builder: (context, object) {
+        return Column(
+          children: [
+            const SizedBox(height: 32),
+            buildHeader(context),
+            Flexible(
+              //decoration: BoxDecoration(
+              //image: DecorationImage(
+              //  image: AssetImage("assets/images/bg.png"),
+              //  fit: BoxFit.cover,
+              //),
+              //),
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                child: SingleChildScrollView(
+                  child: StreamBuilder(
+                    stream: appCon.ws?.stream,
+                    builder: (context, snapshot) {
+                      if (!snapshot.hasData) {
+                        return Container();
+                      }
+
+                      Map data = jsonDecode(snapshot.data as String);
+
+                      var _cards = appCon.cards;
+                      if (_cards == null) {
+                        _cards = data.map(
+                          (key, model) => MapEntry(
+                            key,
+                            CurrencyCard(
+                              key: UniqueKey(),
+                              model: model,
+                            ),
+                          ),
+                        );
+                      } else {
+                        data.forEach((key, model) {
+                          _cards![key] = CurrencyCard(
+                            key: UniqueKey(),
+                            model: model,
+                          );
+                        });
+                      }
+
+                      return SetState(
+                        builder: (context, object) => Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: _cards!.values.toList(),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   Widget buildBottomNavbar(BuildContext context) {
     return SetState(

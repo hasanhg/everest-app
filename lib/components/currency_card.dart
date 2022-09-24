@@ -1,7 +1,6 @@
 import 'dart:ui';
 
 import 'package:everest_app/controller/currency_card_controller.dart';
-import 'package:everest_app/model/currency_card_model.dart';
 import 'package:flutter/material.dart';
 import 'package:state_extended/state_extended.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -17,6 +16,16 @@ Map descMap = {
   "NOKTRY": "Norveç Kronu",
   "CHFTRY": "İsviçre Frangı",
   "AUDTRY": "Avustralya Doları",
+  "ALTIN": "Altın/TL (gr)",
+  "ONS": "Altın/USD (ons)",
+  "KULCEALTIN": "Külçe Altın (gr)",
+  "CEYREK_YENI": "Çeyrek Altın",
+  "GUMUSTRY": "Gümüş (gr)",
+  "GUMUSUSD": "Gümüş (kg)",
+  "XPTUSD": "Platinyum (ons)",
+  "XPDUSD": "Paladyum (ons)",
+  "PLATIN": "Platinyum (kg)",
+  "PALADYUM": "Paladyum (kg)",
 };
 
 Map<String, List<IconData>> iconMap = {
@@ -25,11 +34,24 @@ Map<String, List<IconData>> iconMap = {
   "EURUSD": [Icons.euro_symbol, Icons.currency_lira],
   "JPYTRY": [Icons.currency_yen, Icons.currency_lira],
   "GBPTRY": [Icons.currency_pound, Icons.currency_lira],
-  "DKKTRY": [Icons.priority_high, Icons.currency_lira],
-  "SEKTRY": [Icons.priority_high, Icons.currency_lira],
-  "NOKTRY": [Icons.priority_high, Icons.currency_lira],
   "CHFTRY": [Icons.currency_franc, Icons.currency_lira],
   "AUDTRY": [Icons.attach_money, Icons.currency_lira],
+};
+
+Map<String, String> iconMapFallback = {
+  "DKKTRY": "kr.",
+  "SEKTRY": "kr",
+  "NOKTRY": "kr",
+  "ALTIN": "Au",
+  "ONS": "Au",
+  "KULCEALTIN": "Au",
+  "CEYREK_YENI": "Au",
+  "GUMUSTRY": "Ag",
+  "GUMUSUSD": "Ag",
+  "XPTUSD": "Pt",
+  "XPDUSD": "Pd",
+  "PLATIN": "Pt",
+  "PALADYUM": "Pd",
 };
 
 class CurrencyCard extends StatefulWidget {
@@ -67,16 +89,28 @@ class _CurrencyCardState extends StateX<CurrencyCard> {
   }
 
   Widget buildIcon() {
+    IconData? iconData = iconMap[con.model.name]?[0];
+
     return Stack(
       children: [
         Positioned(
-          child: Icon(
-            iconMap[con.model.name]?[0] ?? Icons.priority_high,
-            size: 16,
-          ),
-          top: 12,
-          left: 6,
+          child: iconData != null
+              ? Icon(
+                  iconData,
+                  size: 24,
+                )
+              : Text(
+                  iconMapFallback[con.model.name] ?? '',
+                  style: GoogleFonts.cairo(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 18,
+                  ),
+                ),
+          //top: 12,
+          //left: 6,
         ),
+        /*
         Positioned(
           child: Icon(
             iconMap[con.model.name]?[1] ?? Icons.priority_high,
@@ -85,6 +119,7 @@ class _CurrencyCardState extends StateX<CurrencyCard> {
           top: 12,
           right: 6,
         ),
+        */
       ],
     );
   }

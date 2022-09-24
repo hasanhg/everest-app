@@ -15,13 +15,13 @@ class AppController extends StateXController {
 
   final AppModel _model;
 
-  late Stream _stream;
+  IOWebSocketChannel? _ws;
   Map<String, CurrencyCard>? _cards;
 
   /// Note, the count comes from a separate class, _Model.
   int get bottomNavIndex => _model.bottomNavIndex;
 
-  Stream get stream => _stream;
+  IOWebSocketChannel? get ws => _ws;
   Map<String, CurrencyCard>? get cards => _cards;
 
   void onNavbarChanged(int index) {
@@ -37,8 +37,13 @@ class AppController extends StateXController {
   }
 
   void _changeStream() {
+    _ws?.sink.close();
+    if (_endpoints.length <= bottomNavIndex) {
+      return;
+    }
+
     String uri = 'ws://192.168.1.8:8080/${_endpoints[bottomNavIndex]}';
-    _stream = IOWebSocketChannel.connect(Uri.parse(uri)).stream;
+    _ws = IOWebSocketChannel.connect(Uri.parse(uri));
   }
 
   void setCards(Map<String, CurrencyCard>? cards) {
