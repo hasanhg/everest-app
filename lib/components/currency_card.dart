@@ -19,17 +19,17 @@ Map descMap = {
   "AUDTRY": "Avustralya Doları",
 };
 
-Map<String, IconData> iconMap = {
-  "USDTRY": Icons.attach_money,
-  "EURTRY": Icons.euro_symbol,
-  "EURUSD": Icons.euro_symbol,
-  "JPYTRY": Icons.currency_yen,
-  "GBPTRY": Icons.currency_pound,
-  //"DKKTRY": "Danimarka Kronu",
-  //"SEKTRY": "İsveç Kronu",
-  //"NOKTRY": "Norveç Kronu",
-  "CHFTRY": Icons.currency_franc,
-  "AUDTRY": Icons.attach_money,
+Map<String, List<IconData>> iconMap = {
+  "USDTRY": [Icons.attach_money, Icons.currency_lira],
+  "EURTRY": [Icons.euro_symbol, Icons.currency_lira],
+  "EURUSD": [Icons.euro_symbol, Icons.currency_lira],
+  "JPYTRY": [Icons.currency_yen, Icons.currency_lira],
+  "GBPTRY": [Icons.currency_pound, Icons.currency_lira],
+  "DKKTRY": [Icons.priority_high, Icons.currency_lira],
+  "SEKTRY": [Icons.priority_high, Icons.currency_lira],
+  "NOKTRY": [Icons.priority_high, Icons.currency_lira],
+  "CHFTRY": [Icons.currency_franc, Icons.currency_lira],
+  "AUDTRY": [Icons.attach_money, Icons.currency_lira],
 };
 
 class CurrencyCard extends StatefulWidget {
@@ -64,6 +64,29 @@ class _CurrencyCardState extends StateX<CurrencyCard> {
 
     /// Retrieve the 'app level' State object
     appState = rootState!;
+  }
+
+  Widget buildIcon() {
+    return Stack(
+      children: [
+        Positioned(
+          child: Icon(
+            iconMap[con.model.name]?[0] ?? Icons.priority_high,
+            size: 16,
+          ),
+          top: 12,
+          left: 6,
+        ),
+        Positioned(
+          child: Icon(
+            iconMap[con.model.name]?[1] ?? Icons.priority_high,
+            size: 16,
+          ),
+          top: 12,
+          right: 6,
+        ),
+      ],
+    );
   }
 
   @override
@@ -135,11 +158,8 @@ class _CurrencyCardState extends StateX<CurrencyCard> {
                       CircleAvatar(
                         backgroundColor: const Color.fromARGB(255, 27, 31, 34),
                         foregroundColor: Colors.white,
-                        radius: 18,
-                        child: Icon(
-                          iconMap[con.model.name] ?? Icons.priority_high,
-                          size: 24,
-                        ),
+                        radius: 20,
+                        child: buildIcon(),
                       ),
                       const SizedBox(width: 12),
                       SizedBox(

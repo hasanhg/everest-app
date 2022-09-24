@@ -1,6 +1,10 @@
+import 'package:everest_app/components/currency_card.dart';
 import 'package:everest_app/model/app_model.dart';
 import 'package:state_extended/state_extended.dart';
+import 'package:web_socket_channel/io.dart';
 import 'package:flutter/material.dart' hide StateSetter;
+
+List<String> _endpoints = ["currency_rates", "metal_rates"];
 
 class AppController extends StateXController {
   factory AppController([StateX? state]) => _this ??= AppController._(state);
@@ -11,14 +15,34 @@ class AppController extends StateXController {
 
   final AppModel _model;
 
+  late Stream _stream;
+  Map<String, CurrencyCard>? _cards;
+
   /// Note, the count comes from a separate class, _Model.
   int get bottomNavIndex => _model.bottomNavIndex;
 
-  void onNavbarChanged(int index) {
-    _model.setBottomNavIndex(index);
+  Stream get stream => _stream;
+  Map<String, CurrencyCard>? get cards => _cards;
 
-    /// Calls only 'SetState' widgets
-    /// or widgets that called the dependOnInheritedWidget(context) function
+  void onNavbarChanged(int index) {
+    if (index == bottomNavIndex) {
+      return;
+    }
+
+    _cards = null;
+    _model.setBottomNavIndex(index);
+    _changeStream();
+
+    notifyClients();
+  }
+
+  void _changeStream() {
+    String uri = 'ws://192.168.1.8:8080/${_endpoints[bottomNavIndex]}';
+    _stream = IOWebSocketChannel.connect(Uri.parse(uri)).stream;
+  }
+
+  void setCards(Map<String, CurrencyCard>? cards) {
+    _cards = cards;
     notifyClients();
   }
 
@@ -28,6 +52,7 @@ class AppController extends StateXController {
   @override
   Future<bool> initAsync() async {
     final init = super.initAsync();
+    _changeStream();
     return init;
   }
 

@@ -6,7 +6,6 @@ import 'package:everest_app/controller/home_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:state_extended/state_extended.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:web_socket_channel/web_socket_channel.dart';
 import 'package:web_socket_channel/io.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -33,8 +32,6 @@ class _MyHomePageState extends StateX<MyHomePage> {
   late HomeController con;
   late AppStateX appState;
   late AppController appCon;
-  late Stream stream;
-  Map<String, CurrencyCard>? _cards;
 
   @override
   void initState() {
@@ -46,10 +43,6 @@ class _MyHomePageState extends StateX<MyHomePage> {
     appState = rootState!;
 
     appCon = appState.controller as AppController;
-
-    stream = IOWebSocketChannel.connect(
-      Uri.parse("ws://192.168.1.157:8080/currency_rates"),
-    ).stream;
   }
 
   /// This is 'the View'; the interface of the home page.
@@ -59,58 +52,65 @@ class _MyHomePageState extends StateX<MyHomePage> {
         //  title: Text(widget.title),
         //),
         backgroundColor: const Color.fromARGB(255, 27, 31, 34),
-        body: Column(
-          children: [
-            const SizedBox(height: 32),
-            buildHeader(context),
-            Flexible(
-              //decoration: BoxDecoration(
-              //image: DecorationImage(
-              //  image: AssetImage("assets/images/bg.png"),
-              //  fit: BoxFit.cover,
-              //),
-              //),
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                child: SingleChildScrollView(
-                  child: StreamBuilder(
-                    stream: stream,
-                    builder: (context, snapshot) {
-                      if (!snapshot.hasData) {
-                        return Container();
-                      }
+        body: SetState(
+          builder: (context, object) {
+            return Column(
+              children: [
+                const SizedBox(height: 32),
+                buildHeader(context),
+                Flexible(
+                  //decoration: BoxDecoration(
+                  //image: DecorationImage(
+                  //  image: AssetImage("assets/images/bg.png"),
+                  //  fit: BoxFit.cover,
+                  //),
+                  //),
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                    child: SingleChildScrollView(
+                      child: StreamBuilder(
+                        stream: appCon.stream,
+                        builder: (context, snapshot) {
+                          if (!snapshot.hasData) {
+                            return Container();
+                          }
 
-                      Map data = jsonDecode(snapshot.data as String);
+                          Map data = jsonDecode(snapshot.data as String);
 
-                      if (_cards == null) {
-                        _cards = data.map(
-                          (key, model) => MapEntry(
-                            key,
-                            CurrencyCard(
-                              key: UniqueKey(),
-                              model: model,
+                          var _cards = appCon.cards;
+                          if (_cards == null) {
+                            _cards = data.map(
+                              (key, model) => MapEntry(
+                                key,
+                                CurrencyCard(
+                                  key: UniqueKey(),
+                                  model: model,
+                                ),
+                              ),
+                            );
+                          } else {
+                            data.forEach((key, model) {
+                              _cards![key] = CurrencyCard(
+                                key: UniqueKey(),
+                                model: model,
+                              );
+                            });
+                          }
+
+                          return SetState(
+                            builder: (context, object) => Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: _cards!.values.toList(),
                             ),
-                          ),
-                        );
-                      } else {
-                        data.forEach((key, model) {
-                          _cards![key] = CurrencyCard(
-                            key: UniqueKey(),
-                            model: model,
                           );
-                        });
-                      }
-
-                      return Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: _cards!.values.toList(),
-                      );
-                    },
+                        },
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            ),
-          ],
+              ],
+            );
+          },
         ),
         bottomNavigationBar: buildBottomNavbar(context),
       );

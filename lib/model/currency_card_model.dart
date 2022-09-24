@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 class CurrencyCardModel {
   String get name => _name;
   String? get description => _description;
@@ -29,11 +31,11 @@ class CurrencyCardModel {
         _description = json["description"],
         _lastUpdatedAt =
             DateTime.tryParse(json["tarih"] ?? "") ?? DateTime.now(),
-        _buyPrice = json["alis"] is double
-            ? json["alis"]
+        _buyPrice = json["alis"] is num
+            ? json["alis"].toDouble()
             : double.tryParse(json["alis"]) ?? 0,
-        _sellPrice = json["satis"] is double
-            ? json["satis"]
+        _sellPrice = json["satis"] is num
+            ? json["satis"].toDouble()
             : double.tryParse(json["satis"]) ?? 0 {
     _difference =
         (((_buyPrice - json["kapanis"]) * 100 / json["kapanis"]) * 100)
