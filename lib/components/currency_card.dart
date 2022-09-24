@@ -254,9 +254,11 @@ class _CurrencyCardState extends StateX<CurrencyCard> {
                   Row(
                     children: [
                       SizedBox(
-                        width: 56,
+                        width: 64,
                         child: Row(
+                          mainAxisSize: MainAxisSize.max,
                           children: [
+                            const Spacer(),
                             FutureBuilder(
                               future: Future.delayed(
                                 const Duration(seconds: 2),
@@ -270,40 +272,36 @@ class _CurrencyCardState extends StateX<CurrencyCard> {
                                       ? const Color.fromARGB(255, 34, 221, 118)
                                       : const Color.fromARGB(255, 231, 27, 27);
 
-                                  return SizedBox(
-                                    width: 8,
-                                    child: Icon(
-                                      isUp
-                                          ? Icons.arrow_drop_up
-                                          : Icons.arrow_drop_down,
-                                      size: 16,
-                                      color: color,
-                                    ),
+                                  return Icon(
+                                    isUp
+                                        ? Icons.arrow_drop_up
+                                        : Icons.arrow_drop_down,
+                                    size: 16,
+                                    color: color,
                                   );
                                 }
 
-                                return const SizedBox(width: 8);
+                                return Container();
                               },
                             ),
-                            SizedBox(
-                              width: 48,
-                              child: Text(
-                                con.model.buyPrice.toString(),
-                                style: GoogleFonts.cairo(
-                                  color: priceColor,
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 12,
-                                ),
-                                textAlign: TextAlign.end,
+                            Text(
+                              con.model.buyPrice.toString(),
+                              style: GoogleFonts.cairo(
+                                color: priceColor,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 12,
                               ),
+                              textAlign: TextAlign.end,
                             ),
                           ],
                         ),
                       ),
                       SizedBox(
-                        width: 56,
+                        width: 64,
                         child: Row(
+                          mainAxisSize: MainAxisSize.max,
                           children: [
+                            const Spacer(),
                             FutureBuilder(
                               future: Future.delayed(
                                 const Duration(seconds: 2),
@@ -317,32 +315,26 @@ class _CurrencyCardState extends StateX<CurrencyCard> {
                                       ? const Color.fromARGB(255, 34, 221, 118)
                                       : const Color.fromARGB(255, 231, 27, 27);
 
-                                  return SizedBox(
-                                    width: 8,
-                                    child: Icon(
-                                      isUp
-                                          ? Icons.arrow_drop_up
-                                          : Icons.arrow_drop_down,
-                                      size: 16,
-                                      color: color,
-                                    ),
+                                  return Icon(
+                                    isUp
+                                        ? Icons.arrow_drop_up
+                                        : Icons.arrow_drop_down,
+                                    size: 16,
+                                    color: color,
                                   );
                                 }
 
-                                return const SizedBox(width: 8);
+                                return Container();
                               },
                             ),
-                            SizedBox(
-                              width: 48,
-                              child: Text(
-                                con.model.sellPrice.toString(),
-                                style: GoogleFonts.cairo(
-                                  color: priceColor,
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 12,
-                                ),
-                                textAlign: TextAlign.end,
+                            Text(
+                              con.model.sellPrice.toString(),
+                              style: GoogleFonts.cairo(
+                                color: priceColor,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 12,
                               ),
+                              textAlign: TextAlign.end,
                             ),
                           ],
                         ),

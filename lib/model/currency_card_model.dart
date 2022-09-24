@@ -49,10 +49,5 @@ class CurrencyCardModel {
             100;
     if (_buyDir?.isEmpty ?? false) _buyDir = null;
     if (_sellDir?.isEmpty ?? false) _sellDir = null;
-
-    Future.delayed(const Duration(seconds: 1), () {
-      _buyDir = null;
-      _sellDir = null;
-    });
   }
 }
