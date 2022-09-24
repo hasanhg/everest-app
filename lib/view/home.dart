@@ -217,7 +217,7 @@ class _MyHomePageState extends StateX<MyHomePage> {
           Row(
             children: [
               SizedBox(
-                width: 48,
+                width: 56,
                 child: Text(
                   "Alış",
                   style: GoogleFonts.cairo(
@@ -229,7 +229,7 @@ class _MyHomePageState extends StateX<MyHomePage> {
                 ),
               ),
               SizedBox(
-                width: 48,
+                width: 56,
                 child: Text(
                   "Satış",
                   style: GoogleFonts.cairo(

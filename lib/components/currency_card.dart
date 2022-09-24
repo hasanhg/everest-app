@@ -254,27 +254,97 @@ class _CurrencyCardState extends StateX<CurrencyCard> {
                   Row(
                     children: [
                       SizedBox(
-                        width: 48,
-                        child: Text(
-                          con.model.buyPrice.toString(),
-                          style: GoogleFonts.cairo(
-                            color: priceColor,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 12,
-                          ),
-                          textAlign: TextAlign.end,
+                        width: 56,
+                        child: Row(
+                          children: [
+                            FutureBuilder(
+                              future: Future.delayed(
+                                const Duration(seconds: 2),
+                              ),
+                              builder: (context, snapshot) {
+                                if (snapshot.connectionState ==
+                                        ConnectionState.waiting &&
+                                    con.model.buyDir != null) {
+                                  bool isUp = con.model.buyDir == "up";
+                                  Color color = isUp
+                                      ? const Color.fromARGB(255, 34, 221, 118)
+                                      : const Color.fromARGB(255, 231, 27, 27);
+
+                                  return SizedBox(
+                                    width: 8,
+                                    child: Icon(
+                                      isUp
+                                          ? Icons.arrow_drop_up
+                                          : Icons.arrow_drop_down,
+                                      size: 16,
+                                      color: color,
+                                    ),
+                                  );
+                                }
+
+                                return const SizedBox(width: 8);
+                              },
+                            ),
+                            SizedBox(
+                              width: 48,
+                              child: Text(
+                                con.model.buyPrice.toString(),
+                                style: GoogleFonts.cairo(
+                                  color: priceColor,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 12,
+                                ),
+                                textAlign: TextAlign.end,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                       SizedBox(
-                        width: 48,
-                        child: Text(
-                          con.model.sellPrice.toString(),
-                          style: GoogleFonts.cairo(
-                            color: priceColor,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 12,
-                          ),
-                          textAlign: TextAlign.end,
+                        width: 56,
+                        child: Row(
+                          children: [
+                            FutureBuilder(
+                              future: Future.delayed(
+                                const Duration(seconds: 2),
+                              ),
+                              builder: (context, snapshot) {
+                                if (snapshot.connectionState ==
+                                        ConnectionState.waiting &&
+                                    con.model.sellDir != null) {
+                                  bool isUp = con.model.sellDir == "up";
+                                  Color color = isUp
+                                      ? const Color.fromARGB(255, 34, 221, 118)
+                                      : const Color.fromARGB(255, 231, 27, 27);
+
+                                  return SizedBox(
+                                    width: 8,
+                                    child: Icon(
+                                      isUp
+                                          ? Icons.arrow_drop_up
+                                          : Icons.arrow_drop_down,
+                                      size: 16,
+                                      color: color,
+                                    ),
+                                  );
+                                }
+
+                                return const SizedBox(width: 8);
+                              },
+                            ),
+                            SizedBox(
+                              width: 48,
+                              child: Text(
+                                con.model.sellPrice.toString(),
+                                style: GoogleFonts.cairo(
+                                  color: priceColor,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 12,
+                                ),
+                                textAlign: TextAlign.end,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ],
