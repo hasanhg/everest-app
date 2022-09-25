@@ -6,7 +6,6 @@ import 'package:everest_app/controller/home_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:state_extended/state_extended.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:web_socket_channel/io.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({

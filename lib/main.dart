@@ -2,8 +2,12 @@ import 'package:everest_app/controller/app_controller.dart';
 import 'package:state_extended/state_extended.dart';
 import 'package:flutter/material.dart' hide StateSetter;
 import 'package:everest_app/view/home.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-void main() => runApp(const MyApp(key: Key('MyApp')));
+Future<void> main() async {
+  await dotenv.load(fileName: ".env");
+  runApp(const MyApp(key: Key('MyApp')));
+}
 
 class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
