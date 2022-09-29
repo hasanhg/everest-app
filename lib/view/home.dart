@@ -6,6 +6,7 @@ import 'package:everest_group/controller/home_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:state_extended/state_extended.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({
@@ -54,13 +55,44 @@ class _MyHomePageState extends StateX<MyHomePage> {
         backgroundColor: const Color.fromARGB(255, 27, 31, 34),
         body: SetState(builder: (context, object) => content(context)),
         bottomNavigationBar: buildBottomNavbar(context),
+        appBar: buildAppBar(context),
       );
+
+  AppBar buildAppBar(BuildContext context) {
+    return AppBar(
+      backgroundColor: Colors.black26,
+      toolbarHeight: 64,
+      leadingWidth: 64,
+      leading: Row(
+        children: [
+          const SizedBox(width: 8),
+          Image.asset(
+            'assets/images/everest-logo.png',
+            width: 48,
+            height: 48,
+          ),
+          const SizedBox(width: 8),
+        ],
+      ),
+      titleSpacing: 0,
+      title: Text(
+        "EVEREST GROUP",
+        style: GoogleFonts.arefRuqaa(
+          color: Colors.white,
+          fontWeight: FontWeight.w500,
+          fontSize: 16,
+        ),
+      ),
+    );
+  }
 
   Widget content(BuildContext context) {
     switch (appCon.bottomNavIndex) {
       case 0:
       case 1:
         return rateTable(context);
+      case 2:
+        return contactUs(context);
       default:
         return Container();
     }
@@ -72,15 +104,8 @@ class _MyHomePageState extends StateX<MyHomePage> {
         return Column(
           mainAxisSize: MainAxisSize.max,
           children: [
-            const SizedBox(height: 32),
             buildHeader(context),
             Flexible(
-              //decoration: BoxDecoration(
-              //image: DecorationImage(
-              //  image: AssetImage("assets/images/bg.png"),
-              //  fit: BoxFit.cover,
-              //),
-              //),
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
                 child: SingleChildScrollView(
@@ -134,6 +159,143 @@ class _MyHomePageState extends StateX<MyHomePage> {
     );
   }
 
+  Widget contactUs(BuildContext context) {
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      padding: EdgeInsets.all(16),
+      child: Column(
+        children: [
+          Text(
+            'İLETİŞİM BİLGİLERİ',
+            style: GoogleFonts.cairo(
+              color: Colors.white,
+              fontWeight: FontWeight.w600,
+              fontSize: 18,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 36),
+          CircleAvatar(
+            radius: 24,
+            backgroundColor: Colors.blueGrey.shade800,
+            child: Icon(Icons.phone, color: Colors.white54),
+          ),
+          const SizedBox(height: 12),
+          Text(
+            '+90 555 555 55 55',
+            style: GoogleFonts.cairo(
+              color: Colors.white54,
+              fontWeight: FontWeight.w500,
+              fontSize: 16,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          //////////////
+          const SizedBox(height: 48),
+          CircleAvatar(
+            radius: 24,
+            backgroundColor: Colors.blueGrey.shade800,
+            child: Icon(Icons.location_on, color: Colors.white54),
+          ),
+          const SizedBox(height: 12),
+          Padding(
+            padding: EdgeInsets.fromLTRB(36, 0, 36, 0),
+            child: Text(
+              'Tayahatun Mahallesi Mercan Kapısı Çıkışı Tığcılar Sokak Pastırmacı Han No:42, Fatih/İstanbul',
+              style: GoogleFonts.cairo(
+                color: Colors.white54,
+                fontWeight: FontWeight.w500,
+                fontSize: 16,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ),
+          //////////////
+          const SizedBox(height: 24),
+          CircleAvatar(
+            radius: 24,
+            backgroundColor: Colors.blueGrey.shade800,
+            child: Icon(Icons.mail, color: Colors.white54),
+          ),
+          const SizedBox(height: 12),
+          Padding(
+            padding: EdgeInsets.fromLTRB(36, 0, 36, 0),
+            child: Text(
+              'info@everestgroup.com',
+              style: GoogleFonts.cairo(
+                color: Colors.white54,
+                fontWeight: FontWeight.w500,
+                fontSize: 16,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ),
+          //////////////
+          const SizedBox(height: 48),
+          InkWell(
+            onTap: () => _launchWhatsapp(),
+            child: Container(
+              padding: EdgeInsets.all(8),
+              width: 240,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(8)),
+                color: Colors.green,
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.whatsapp, color: Colors.white, size: 48),
+                  const SizedBox(width: 8),
+                  Column(
+                    children: [
+                      Text(
+                        'WhatsApp',
+                        style: GoogleFonts.cairo(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 16,
+                          height: 1.2,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      Text(
+                        'Mesaj yollamak için tıklayın',
+                        style: GoogleFonts.cairo(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 12,
+                          height: 1.2,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<void> _launchWhatsapp() async {
+    var whatsapp = "+905318649984";
+    var whatsappAndroid =
+        Uri.parse("whatsapp://send?phone=$whatsapp&text=Merhaba%20Everest");
+
+    if (await canLaunchUrl(whatsappAndroid)) {
+      await launchUrl(whatsappAndroid);
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("WhatsApp is not installed on the device"),
+        ),
+      );
+    }
+  }
+
   Widget buildBottomNavbar(BuildContext context) {
     return SetState(
       builder: (context, object) => Container(
@@ -182,12 +344,8 @@ class _MyHomePageState extends StateX<MyHomePage> {
               label: "Maden",
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.currency_bitcoin),
-              label: "Kripto",
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.currency_exchange),
-              label: "Çevirici",
+              icon: Icon(Icons.mail),
+              label: "İletişim",
             ),
           ],
         ),
