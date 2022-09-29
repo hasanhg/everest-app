@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:everest_app/components/currency_card.dart';
-import 'package:everest_app/controller/app_controller.dart';
-import 'package:everest_app/controller/home_controller.dart';
+import 'package:everest_group/components/currency_card.dart';
+import 'package:everest_group/controller/app_controller.dart';
+import 'package:everest_group/controller/home_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:state_extended/state_extended.dart';
 import 'package:google_fonts/google_fonts.dart';

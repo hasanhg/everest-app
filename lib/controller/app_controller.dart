@@ -1,5 +1,5 @@
-import 'package:everest_app/components/currency_card.dart';
-import 'package:everest_app/model/app_model.dart';
+import 'package:everest_group/components/currency_card.dart';
+import 'package:everest_group/model/app_model.dart';
 import 'package:state_extended/state_extended.dart';
 import 'package:web_socket_channel/io.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';

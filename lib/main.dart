@@ -1,7 +1,7 @@
-import 'package:everest_app/controller/app_controller.dart';
+import 'package:everest_group/controller/app_controller.dart';
 import 'package:state_extended/state_extended.dart';
 import 'package:flutter/material.dart' hide StateSetter;
-import 'package:everest_app/view/home.dart';
+import 'package:everest_group/view/home.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 Future<void> main() async {

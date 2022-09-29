@@ -1,5 +1,5 @@
-import 'package:everest_app/model/home_model.dart';
-import 'package:everest_app/view/home.dart';
+import 'package:everest_group/model/home_model.dart';
+import 'package:everest_group/view/home.dart';
 import 'package:state_extended/state_extended.dart';
 import 'package:flutter/material.dart' hide StateSetter;
 

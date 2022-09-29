@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:everest_app/controller/currency_card_controller.dart';
+import 'package:everest_group/controller/currency_card_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:state_extended/state_extended.dart';
 import 'package:google_fonts/google_fonts.dart';

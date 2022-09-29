@@ -1,5 +1,5 @@
-import 'package:everest_app/model/app_model.dart';
-import 'package:everest_app/model/currency_card_model.dart';
+import 'package:everest_group/model/app_model.dart';
+import 'package:everest_group/model/currency_card_model.dart';
 import 'package:state_extended/state_extended.dart';
 import 'package:flutter/material.dart' hide StateSetter;
 
