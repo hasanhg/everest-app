@@ -39,6 +39,7 @@ dependencies:
   google_fonts: ^3.0.1
   web_socket_channel: ^2.2.0
   url_launcher: ^6.1.6
+  flutter_native_splash: ^2.2.10+1
 
 dev_dependencies:
   flutter_test:
@@ -52,6 +53,19 @@ flutter_icons:
   ios: true
   # optionally, as transparency is not allowed on app store
   remove_alpha_ios: true
+
+# Splash Screen Settings
+flutter_native_splash:
+  #general
+  color: "#1a1a1a"
+  image: "assets/images/everest-logo-alt.png"
+  fullscreen: true
+  android: true
+  ios: true
+  web: false
+  android_12:
+    image: "assets/images/everest-logo-alt.png"
+    color: "#1a1a1a"
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

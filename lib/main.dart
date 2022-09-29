@@ -5,6 +5,7 @@ import 'package:everest_group/view/home.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: ".env");
   runApp(const MyApp(key: Key('MyApp')));
 }
