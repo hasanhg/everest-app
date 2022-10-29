@@ -2,9 +2,9 @@ import 'package:everest_group/components/currency_card.dart';
 import 'package:everest_group/model/app_model.dart';
 import 'package:state_extended/state_extended.dart';
 import 'package:web_socket_channel/io.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter/material.dart' hide StateSetter;
 
+const WS_URL = 'ws://178.18.252.113:8088';
 List<String> _endpoints = ["currency_rates", "metal_rates"];
 
 class AppController extends StateXController {
@@ -42,7 +42,7 @@ class AppController extends StateXController {
       return;
     }
 
-    String uri = '${dotenv.env["WS_URL"]}/${_endpoints[bottomNavIndex]}';
+    String uri = '$WS_URL/${_endpoints[bottomNavIndex]}';
     _ws = IOWebSocketChannel.connect(Uri.parse(uri));
   }
 

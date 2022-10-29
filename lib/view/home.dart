@@ -182,7 +182,7 @@ class _MyHomePageState extends StateX<MyHomePage> {
           ),
           const SizedBox(height: 12),
           Text(
-            '+90 555 555 55 55',
+            '-',
             style: GoogleFonts.cairo(
               color: Colors.white54,
               fontWeight: FontWeight.w500,
@@ -201,7 +201,7 @@ class _MyHomePageState extends StateX<MyHomePage> {
           Padding(
             padding: EdgeInsets.fromLTRB(36, 0, 36, 0),
             child: Text(
-              'Tayahatun Mahallesi Mercan Kapısı Çıkışı Tığcılar Sokak Pastırmacı Han No:42, Fatih/İstanbul',
+              'Tayahatun Mahallesi Mercan Kapısı Çıkışı Tığcılar Sokak Pastırmacı Han No:10, Fatih/İstanbul',
               style: GoogleFonts.cairo(
                 color: Colors.white54,
                 fontWeight: FontWeight.w500,
@@ -221,7 +221,7 @@ class _MyHomePageState extends StateX<MyHomePage> {
           Padding(
             padding: EdgeInsets.fromLTRB(36, 0, 36, 0),
             child: Text(
-              'info@everestgroup.com',
+              'info.evergroup@gmail.com',
               style: GoogleFonts.cairo(
                 color: Colors.white54,
                 fontWeight: FontWeight.w500,

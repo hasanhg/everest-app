@@ -1,4 +1,4 @@
-package com.example.everest_app
+package com.everestgroup.app
 
 import io.flutter.embedding.android.FlutterActivity
 
